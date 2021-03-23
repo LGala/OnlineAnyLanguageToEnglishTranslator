@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body { 
+                margin:0 auto; width: 50%;
+                font-family: Arial, sans-serif;
+            }
+            
+            #title { 
+                text-align: center;
+                font-size: 37.5px;
+            }
+
+            #sentence_div {
+                margin-top: 10%;
+            }
+
+            #sentence {
+                width: 75%;
+                resize: none;
+                margin: 0 auto;
+                display: block;
+                text-align: center;
+            }
+
+            #translation_area {
+                margin-top: 20%;
+                height: 30%;
+                text-align: center;
+            }
+        </style>
+
+        <script>
+            function sendRequest() {
+                var request = new XMLHttpRequest();
+                
+                request.onreadystatechange = function() {
+                    
+                    if (request.readyState == 4 && request.status == 200) {
+                        document.getElementById("translation_area").innerHTML = "<h1>" + request.responseText + "</h1>";
+                    }
+                };
+
+                request.open("post", "translate_sentence", true);
+                
+                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+                request.send("sentence=" + encodeURI(document.getElementById("sentence").value));
+            }
+            </script>        
+    </head>
+    
+    <body>
+        <a href="https://github.com/LGala/OnlineAnyLanguageToEnglishTranslator"><h1 id="title">Any language to english translator</h1></a>
+        <div id="sentence_div">
+            <textarea id="sentence" rows="3" placeholder="write your sentence or text" oninput="sendRequest()"></textarea>
+        </div>
+        <div id="translation_area"></div> 
+    </body>
+</html>
+
